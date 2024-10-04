@@ -36,4 +36,16 @@ public class EventService {
     public List<Event> searchEventsByName(String name) {
         return eventRepository.findByNameContainingIgnoreCase(name);
     }
+    public Event updateEvent(Long id, Event event) {
+        Optional<Event> eventOptional = eventRepository.findById(id);
+        if (eventOptional.isPresent()) {
+            Event updatedEvent = eventOptional.get();
+            updatedEvent.setName(event.getName());
+            updatedEvent.setLocation(event.getLocation());
+            updatedEvent.setDescription(event.getDescription());
+            return eventRepository.save(updatedEvent);
+        }else{
+            return null;
+        }
+    }
 }
